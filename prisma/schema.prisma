@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum PropertyType {
+  HOUSE
+  FLAT
+  ROOM
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  phone     String?
+  listings  Listing[]
+  createdAt DateTime  @default(now())
+}
+
+model Listing {
+  id           String       @id @default(cuid())
+  title        String
+  description  String
+  price        Int
+  city         String
+  address      String
+  propertyType PropertyType
+  bedrooms     Int
+  bathrooms    Int
+  amenities    String
+  images       String
+  contactName  String
+  contactPhone String
+  available    Boolean      @default(true)
+  hostId       String
+  host         User         @relation(fields: [hostId], references: [id])
+  inquiries    Inquiry[]
+  createdAt    DateTime     @default(now())
+}
+
+model Inquiry {
+  id        String   @id @default(cuid())
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id])
+  name      String
+  phone     String
+  message   String
+  createdAt DateTime @default(now())
+}

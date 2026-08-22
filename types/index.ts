@@ -1,0 +1,1 @@
+export type { Listing, Inquiry, User } from "@/lib/generated/prisma/client";
