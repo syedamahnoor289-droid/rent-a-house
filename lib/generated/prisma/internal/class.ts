@@ -19,8 +19,8 @@ const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
   "clientVersion": "7.9.1",
   "engineVersion": "e922089b7d7502aff4249d5da3420f6fa55fc6ad",
-  "activeProvider": "sqlite",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../lib/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nenum PropertyType {\n  HOUSE\n  FLAT\n  ROOM\n}\n\nmodel User {\n  id        String    @id @default(cuid())\n  name      String\n  email     String    @unique\n  password  String\n  phone     String?\n  listings  Listing[]\n  createdAt DateTime  @default(now())\n}\n\nmodel Listing {\n  id           String       @id @default(cuid())\n  title        String\n  description  String\n  price        Int\n  city         String\n  address      String\n  propertyType PropertyType\n  bedrooms     Int\n  bathrooms    Int\n  amenities    String\n  images       String\n  contactName  String\n  contactPhone String\n  available    Boolean      @default(true)\n  hostId       String\n  host         User         @relation(fields: [hostId], references: [id])\n  inquiries    Inquiry[]\n  createdAt    DateTime     @default(now())\n}\n\nmodel Inquiry {\n  id        String   @id @default(cuid())\n  listingId String\n  listing   Listing  @relation(fields: [listingId], references: [id])\n  name      String\n  phone     String\n  message   String\n  createdAt DateTime @default(now())\n}\n",
+  "activeProvider": "postgresql",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../lib/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nenum PropertyType {\n  HOUSE\n  FLAT\n  ROOM\n}\n\nmodel User {\n  id        String    @id @default(cuid())\n  name      String\n  email     String    @unique\n  password  String\n  phone     String?\n  listings  Listing[]\n  createdAt DateTime  @default(now())\n}\n\nmodel Listing {\n  id           String       @id @default(cuid())\n  title        String\n  description  String\n  price        Int\n  city         String\n  address      String\n  propertyType PropertyType\n  bedrooms     Int\n  bathrooms    Int\n  amenities    String\n  images       String\n  contactName  String\n  contactPhone String\n  available    Boolean      @default(true)\n  hostId       String\n  host         User         @relation(fields: [hostId], references: [id])\n  inquiries    Inquiry[]\n  createdAt    DateTime     @default(now())\n}\n\nmodel Inquiry {\n  id        String   @id @default(cuid())\n  listingId String\n  listing   Listing  @relation(fields: [listingId], references: [id])\n  name      String\n  phone     String\n  message   String\n  createdAt DateTime @default(now())\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -45,10 +45,10 @@ async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Modul
 }
 
 config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.mjs"),
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.mjs"),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.wasm-base64.mjs")
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.wasm-base64.mjs")
     return await decodeBase64AsWasm(wasm)
   },
 

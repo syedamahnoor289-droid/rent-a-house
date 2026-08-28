@@ -404,6 +404,7 @@ export type InquiryCreateOrConnectWithoutListingInput = {
 
 export type InquiryCreateManyListingInputEnvelope = {
   data: Prisma.InquiryCreateManyListingInput | Prisma.InquiryCreateManyListingInput[]
+  skipDuplicates?: boolean
 }
 
 export type InquiryUpsertWithWhereUniqueWithoutListingInput = {
@@ -1194,6 +1195,7 @@ export type InquiryCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Inquiries.
    */
   data: Prisma.InquiryCreateManyInput | Prisma.InquiryCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1212,6 +1214,7 @@ export type InquiryCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Inquiries.
    */
   data: Prisma.InquiryCreateManyInput | Prisma.InquiryCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
